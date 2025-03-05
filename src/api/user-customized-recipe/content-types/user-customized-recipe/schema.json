@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_customized_recipes",
+  "info": {
+    "singularName": "user-customized-recipe",
+    "pluralName": "user-customized-recipes",
+    "displayName": "User Customized Recipe"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_customized_recipe"
+    },
+    "recipe": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::recipe.recipe",
+      "inversedBy": "user_customized_recipe"
+    },
+    "modified_ingredients": {
+      "type": "json"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "kind": "collectionType",
+  "collectionName": "elimination_calendars",
+  "info": {
+    "singularName": "elimination-calendar",
+    "pluralName": "elimination-calendars",
+    "displayName": "Elimination Calendar"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {}
+}

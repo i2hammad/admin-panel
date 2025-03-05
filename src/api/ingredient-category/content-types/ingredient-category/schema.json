@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ingredient_categories",
+  "info": {
+    "singularName": "ingredient-category",
+    "pluralName": "ingredient-categories",
+    "displayName": "Ingredient Category"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "ingredient_category": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ingradient.ingradient",
+      "mappedBy": "category"
+    }
+  }
+}

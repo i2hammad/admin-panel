@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recipes",
+  "info": {
+    "singularName": "recipe",
+    "pluralName": "recipes",
+    "displayName": "Recipe",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "cooking_time": {
+      "type": "string"
+    },
+    "servings": {
+      "type": "integer"
+    },
+    "recipe_ingredients": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::recipe-ingredient.recipe-ingredient",
+      "mappedBy": "recipe"
+    },
+    "user_customized_recipe": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::user-customized-recipe.user-customized-recipe",
+      "mappedBy": "recipe"
+    },
+    "favorite_recipe": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::favorite-recipe.favorite-recipe",
+      "mappedBy": "recipe"
+    },
+    "instructions": {
+      "type": "blocks"
+    },
+    "nutritional_info": {
+      "type": "json"
+    }
+  }
+}

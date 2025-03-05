@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ingradients",
+  "info": {
+    "singularName": "ingradient",
+    "pluralName": "ingradients",
+    "displayName": "Ingradient",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "is_replaceable": {
+      "type": "boolean"
+    },
+    "recipe_ingredients": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::recipe-ingredient.recipe-ingredient",
+      "mappedBy": "ingradient"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ingredient-category.ingredient-category",
+      "inversedBy": "ingredient_category"
+    },
+    "replaceable_ingredients": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::replaceable-ingredient.replaceable-ingredient",
+      "mappedBy": "substitutes"
+    }
+  }
+}

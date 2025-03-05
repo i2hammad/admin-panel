@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recipe_ingredients",
+  "info": {
+    "singularName": "recipe-ingredient",
+    "pluralName": "recipe-ingredients",
+    "displayName": "Recipe Ingredient"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "recipe": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::recipe.recipe",
+      "inversedBy": "recipe_ingredients"
+    },
+    "ingradient": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ingradient.ingradient",
+      "inversedBy": "recipe_ingredients"
+    },
+    "quantity": {
+      "type": "decimal"
+    },
+    "unit": {
+      "type": "enumeration",
+      "enum": [
+        "g,",
+        "ml,",
+        "tbsp,",
+        "cup"
+      ]
+    }
+  }
+}
