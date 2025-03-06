@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_meal_plans",
+  "info": {
+    "singularName": "user-meal-plan",
+    "pluralName": "user-meal-plans",
+    "displayName": "User Meal Plans",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_meal_plans"
+    },
+    "start_date": {
+      "type": "date"
+    },
+    "end_date": {
+      "type": "date"
+    },
+    "plan_status": {
+      "type": "enumeration",
+      "enum": [
+        "Active,",
+        "Completed,",
+        "Canceled"
+      ]
+    },
+    "meal_plan": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::meal-plan.meal-plan",
+      "inversedBy": "user_meal_plans"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "meal_plans",
+  "info": {
+    "singularName": "meal-plan",
+    "pluralName": "meal-plans",
+    "displayName": "Meal Plan",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "plan_type": {
+      "type": "enumeration",
+      "enum": [
+        "Custom,",
+        "General"
+      ]
+    },
+    "days": {
+      "type": "enumeration",
+      "enum": [
+        "Weekly,",
+        "Fifteen_Days,",
+        "Monthly"
+      ]
+    },
+    "start_date": {
+      "type": "date"
+    },
+    "end_date": {
+      "type": "date"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "meal_plans"
+    },
+    "user_meal_plans": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-meal-plan.user-meal-plan",
+      "mappedBy": "meal_plan"
+    }
+  }
+}

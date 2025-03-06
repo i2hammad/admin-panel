@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "meal_plan_meals",
+  "info": {
+    "singularName": "meal-plan-meal",
+    "pluralName": "meal-plan-meals",
+    "displayName": "Meal Plan Meals"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "meal_type": {
+      "type": "enumeration",
+      "enum": [
+        "Breakfast,",
+        "Lunch,",
+        "Dinner,",
+        "Snack"
+      ]
+    },
+    "time": {
+      "type": "time"
+    },
+    "meal_plan_day": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::meal-plan-day.meal-plan-day",
+      "inversedBy": "meal_plan_meals"
+    },
+    "recipes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::recipe.recipe",
+      "inversedBy": "meal_plan_meals"
+    }
+  }
+}

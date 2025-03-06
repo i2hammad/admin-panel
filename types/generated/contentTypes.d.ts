@@ -538,6 +538,120 @@ export interface ApiIngredientCategoryIngredientCategory
   };
 }
 
+export interface ApiMealPlanDayMealPlanDay extends Struct.CollectionTypeSchema {
+  collectionName: 'meal_plan_days';
+  info: {
+    displayName: 'Meal Plan Days';
+    pluralName: 'meal-plan-days';
+    singularName: 'meal-plan-day';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::meal-plan-day.meal-plan-day'
+    > &
+      Schema.Attribute.Private;
+    meal_date: Schema.Attribute.Date;
+    meal_plan: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::meal-plan.meal-plan'
+    >;
+    meal_plan_meals: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::meal-plan-meal.meal-plan-meal'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMealPlanMealMealPlanMeal
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'meal_plan_meals';
+  info: {
+    displayName: 'Meal Plan Meals';
+    pluralName: 'meal-plan-meals';
+    singularName: 'meal-plan-meal';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::meal-plan-meal.meal-plan-meal'
+    > &
+      Schema.Attribute.Private;
+    meal_plan_day: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::meal-plan-day.meal-plan-day'
+    >;
+    meal_type: Schema.Attribute.Enumeration<
+      ['Breakfast,', 'Lunch,', 'Dinner,', 'Snack']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    recipes: Schema.Attribute.Relation<'manyToMany', 'api::recipe.recipe'>;
+    time: Schema.Attribute.Time;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiMealPlanMealPlan extends Struct.CollectionTypeSchema {
+  collectionName: 'meal_plans';
+  info: {
+    description: '';
+    displayName: 'Meal Plan';
+    pluralName: 'meal-plans';
+    singularName: 'meal-plan';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    days: Schema.Attribute.Enumeration<['Weekly,', 'Fifteen_Days,', 'Monthly']>;
+    end_date: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::meal-plan.meal-plan'
+    > &
+      Schema.Attribute.Private;
+    plan_type: Schema.Attribute.Enumeration<['Custom,', 'General']>;
+    publishedAt: Schema.Attribute.DateTime;
+    start_date: Schema.Attribute.Date;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user_meal_plans: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-meal-plan.user-meal-plan'
+    >;
+    users_permissions_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiRecipeIngredientRecipeIngredient
   extends Struct.CollectionTypeSchema {
   collectionName: 'recipe_ingredients';
@@ -601,6 +715,10 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
       'api::recipe.recipe'
     > &
       Schema.Attribute.Private;
+    meal_plan_meals: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::meal-plan-meal.meal-plan-meal'
+    >;
     nutritional_info: Schema.Attribute.JSON;
     publishedAt: Schema.Attribute.DateTime;
     recipe_ingredients: Schema.Attribute.Relation<
@@ -684,6 +802,48 @@ export interface ApiUserCustomizedRecipeUserCustomizedRecipe
       Schema.Attribute.Private;
     user: Schema.Attribute.Relation<
       'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
+export interface ApiUserMealPlanUserMealPlan
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_meal_plans';
+  info: {
+    description: '';
+    displayName: 'User Meal Plans';
+    pluralName: 'user-meal-plans';
+    singularName: 'user-meal-plan';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    end_date: Schema.Attribute.Date;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-meal-plan.user-meal-plan'
+    > &
+      Schema.Attribute.Private;
+    meal_plan: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::meal-plan.meal-plan'
+    >;
+    plan_status: Schema.Attribute.Enumeration<
+      ['Active,', 'Completed,', 'Canceled']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    start_date: Schema.Attribute.Date;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
   };
@@ -1168,6 +1328,10 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    meal_plans: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::meal-plan.meal-plan'
+    >;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
@@ -1186,6 +1350,10 @@ export interface PluginUsersPermissionsUser
     user_customized_recipe: Schema.Attribute.Relation<
       'oneToOne',
       'api::user-customized-recipe.user-customized-recipe'
+    >;
+    user_meal_plans: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-meal-plan.user-meal-plan'
     >;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -1211,10 +1379,14 @@ declare module '@strapi/strapi' {
       'api::global.global': ApiGlobalGlobal;
       'api::ingradient.ingradient': ApiIngradientIngradient;
       'api::ingredient-category.ingredient-category': ApiIngredientCategoryIngredientCategory;
+      'api::meal-plan-day.meal-plan-day': ApiMealPlanDayMealPlanDay;
+      'api::meal-plan-meal.meal-plan-meal': ApiMealPlanMealMealPlanMeal;
+      'api::meal-plan.meal-plan': ApiMealPlanMealPlan;
       'api::recipe-ingredient.recipe-ingredient': ApiRecipeIngredientRecipeIngredient;
       'api::recipe.recipe': ApiRecipeRecipe;
       'api::replaceable-ingredient.replaceable-ingredient': ApiReplaceableIngredientReplaceableIngredient;
       'api::user-customized-recipe.user-customized-recipe': ApiUserCustomizedRecipeUserCustomizedRecipe;
+      'api::user-meal-plan.user-meal-plan': ApiUserMealPlanUserMealPlan;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

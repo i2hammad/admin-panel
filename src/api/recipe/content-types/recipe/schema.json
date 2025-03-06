@@ -54,6 +54,12 @@
     },
     "nutritional_info": {
       "type": "json"
+    },
+    "meal_plan_meals": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::meal-plan-meal.meal-plan-meal",
+      "mappedBy": "recipes"
     }
   }
 }

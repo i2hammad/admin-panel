@@ -76,6 +76,18 @@
       "relation": "oneToOne",
       "target": "api::favorite-recipe.favorite-recipe",
       "mappedBy": "user"
+    },
+    "meal_plans": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::meal-plan.meal-plan",
+      "mappedBy": "users_permissions_user"
+    },
+    "user_meal_plans": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-meal-plan.user-meal-plan",
+      "mappedBy": "user"
     }
   }
 }

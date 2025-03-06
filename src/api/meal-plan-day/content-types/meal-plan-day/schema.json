@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "meal_plan_days",
+  "info": {
+    "singularName": "meal-plan-day",
+    "pluralName": "meal-plan-days",
+    "displayName": "Meal Plan Days"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "meal_plan": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::meal-plan.meal-plan"
+    },
+    "meal_date": {
+      "type": "date"
+    },
+    "meal_plan_meals": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::meal-plan-meal.meal-plan-meal",
+      "mappedBy": "meal_plan_day"
+    }
+  }
+}
