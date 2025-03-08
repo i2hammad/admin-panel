@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_recipie_ingredients",
+  "info": {
+    "displayName": "Ingredients",
+    "icon": "check",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "ingredient_name": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "enumeration",
+      "enum": [
+        "gram,",
+        "ml,",
+        "tbsp,",
+        "cup,",
+        "to taste"
+      ]
+    },
+    "ingredient_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::ingredient-category.ingredient-category"
+    }
+  }
+}

@@ -1,5 +1,37 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface RecipieIngredients extends Struct.ComponentSchema {
+  collectionName: 'components_recipie_ingredients';
+  info: {
+    description: '';
+    displayName: 'Ingredients';
+    icon: 'check';
+  };
+  attributes: {
+    ingredient_category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::ingredient-category.ingredient-category'
+    >;
+    ingredient_name: Schema.Attribute.String;
+    quantity: Schema.Attribute.String;
+    unit: Schema.Attribute.Enumeration<
+      ['gram,', 'ml,', 'tbsp,', 'cup,', 'to taste']
+    >;
+  };
+}
+
+export interface RecipieNutrientInfo extends Struct.ComponentSchema {
+  collectionName: 'components_recipie_nutrient_infos';
+  info: {
+    displayName: 'Nutrient Info';
+    icon: 'chartCircle';
+  };
+  attributes: {
+    nutrient_info: Schema.Attribute.String;
+    value: Schema.Attribute.String;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -65,6 +97,8 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'recipie.ingredients': RecipieIngredients;
+      'recipie.nutrient-info': RecipieNutrientInfo;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

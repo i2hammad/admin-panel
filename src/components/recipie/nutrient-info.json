@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_recipie_nutrient_infos",
+  "info": {
+    "displayName": "Nutrient Info",
+    "icon": "chartCircle"
+  },
+  "options": {},
+  "attributes": {
+    "nutrient_info": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    }
+  }
+}

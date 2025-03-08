@@ -369,10 +369,46 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBmiBmi extends Struct.CollectionTypeSchema {
+  collectionName: 'bmis';
+  info: {
+    description: '';
+    displayName: 'BMI';
+    pluralName: 'bmis';
+    singularName: 'bmi';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    currentWeight: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    date_of_birth: Schema.Attribute.Date & Schema.Attribute.Required;
+    Gender: Schema.Attribute.Enumeration<['Male ', 'Female', 'Other']> &
+      Schema.Attribute.Required;
+    height: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    idealBmiWeight: Schema.Attribute.BigInteger;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::bmi.bmi'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    users_permissions_user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiEliminationCalendarEliminationCalendar
   extends Struct.CollectionTypeSchema {
   collectionName: 'elimination_calendars';
   info: {
+    description: '';
     displayName: 'Elimination Calendar';
     pluralName: 'elimination-calendars';
     singularName: 'elimination-calendar';
@@ -384,13 +420,64 @@ export interface ApiEliminationCalendarEliminationCalendar
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    date: Schema.Attribute.Date & Schema.Attribute.Required;
+    Item_name: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::elimination-calendar.elimination-calendar'
     > &
       Schema.Attribute.Private;
+    log_type: Schema.Attribute.Enumeration<
+      [
+        'Eliminated Item',
+        'Added Item',
+        'Daily Note',
+        'Mood Log',
+        'Period Log',
+        'Weight Track',
+      ]
+    > &
+      Schema.Attribute.Required;
+    mood_rating: Schema.Attribute.Enumeration<
+      ['mood one', 'mood two', 'mood three', 'mood four', 'mood five']
+    >;
+    notes: Schema.Attribute.Blocks;
+    period_end_date: Schema.Attribute.Date;
+    period_start_date: Schema.Attribute.Date;
     publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    weight_kg: Schema.Attribute.Decimal;
+  };
+}
+
+export interface ApiFaqFaq extends Struct.CollectionTypeSchema {
+  collectionName: 'faqs';
+  info: {
+    description: '';
+    displayName: 'FAQ';
+    pluralName: 'faqs';
+    singularName: 'faq';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    answer: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::faq.faq'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    question: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -456,6 +543,37 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     siteName: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiGoalGoal extends Struct.CollectionTypeSchema {
+  collectionName: 'goals';
+  info: {
+    description: '';
+    displayName: 'Goal';
+    pluralName: 'goals';
+    singularName: 'goal';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    goal_weight: Schema.Attribute.BigInteger & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::goal.goal'> &
+      Schema.Attribute.Private;
+    personal_goal_note: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    reminder_frequency: Schema.Attribute.Enumeration<
+      ['Daily', 'Weekly', 'Monthly']
+    > &
+      Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -652,6 +770,72 @@ export interface ApiMealPlanMealPlan extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiNutritionalInfoNutritionalInfo
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'nutritional_infos';
+  info: {
+    displayName: 'Nutritional Info';
+    pluralName: 'nutritional-infos';
+    singularName: 'nutritional-info';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::nutritional-info.nutritional-info'
+    > &
+      Schema.Attribute.Private;
+    nutrient_info: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    value: Schema.Attribute.String;
+  };
+}
+
+export interface ApiRecipeCategorieRecipeCategorie
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'recipe_categories';
+  info: {
+    description: '';
+    displayName: 'Recipe Categories';
+    pluralName: 'recipe-categories';
+    singularName: 'recipe-categorie';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::recipe-categorie.recipe-categorie'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    recipe_category_name: Schema.Attribute.String & Schema.Attribute.Required;
+    recipe_subcategories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::recipe-subcategorie.recipe-subcategorie'
+    >;
+    recipes: Schema.Attribute.Relation<'oneToMany', 'api::recipe.recipe'>;
+    slug: Schema.Attribute.UID;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiRecipeIngredientRecipeIngredient
   extends Struct.CollectionTypeSchema {
   collectionName: 'recipe_ingredients';
@@ -687,6 +871,41 @@ export interface ApiRecipeIngredientRecipeIngredient
   };
 }
 
+export interface ApiRecipeSubcategorieRecipeSubcategorie
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'recipe_subcategories';
+  info: {
+    displayName: 'Recipe Subcategories';
+    pluralName: 'recipe-subcategories';
+    singularName: 'recipe-subcategorie';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::recipe-subcategorie.recipe-subcategorie'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    recipe_category: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::recipe-categorie.recipe-categorie'
+    >;
+    recipes: Schema.Attribute.Relation<'oneToMany', 'api::recipe.recipe'>;
+    slug: Schema.Attribute.UID<'sub_category_name'>;
+    sub_category_name: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
   collectionName: 'recipes';
   info: {
@@ -703,6 +922,7 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
     favorite_recipe: Schema.Attribute.Relation<
       'oneToOne',
       'api::favorite-recipe.favorite-recipe'
@@ -719,11 +939,19 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::meal-plan-meal.meal-plan-meal'
     >;
-    nutritional_info: Schema.Attribute.JSON;
+    nutrients: Schema.Attribute.Component<'recipie.nutrient-info', true>;
     publishedAt: Schema.Attribute.DateTime;
+    recipe_category: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::recipe-categorie.recipe-categorie'
+    >;
     recipe_ingredients: Schema.Attribute.Relation<
       'oneToMany',
       'api::recipe-ingredient.recipe-ingredient'
+    >;
+    recipe_subcategory: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::recipe-subcategorie.recipe-subcategorie'
     >;
     servings: Schema.Attribute.Integer;
     title: Schema.Attribute.String;
@@ -1304,15 +1532,21 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    bmi: Schema.Attribute.Relation<'oneToOne', 'api::bmi.bmi'>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    diet_preference: Schema.Attribute.Enumeration<['Carnivore', 'Ketovore']> &
+      Schema.Attribute.Required;
+    elimination_calendars: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::elimination-calendar.elimination-calendar'
+    >;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -1374,15 +1608,21 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::bmi.bmi': ApiBmiBmi;
       'api::elimination-calendar.elimination-calendar': ApiEliminationCalendarEliminationCalendar;
+      'api::faq.faq': ApiFaqFaq;
       'api::favorite-recipe.favorite-recipe': ApiFavoriteRecipeFavoriteRecipe;
       'api::global.global': ApiGlobalGlobal;
+      'api::goal.goal': ApiGoalGoal;
       'api::ingradient.ingradient': ApiIngradientIngradient;
       'api::ingredient-category.ingredient-category': ApiIngredientCategoryIngredientCategory;
       'api::meal-plan-day.meal-plan-day': ApiMealPlanDayMealPlanDay;
       'api::meal-plan-meal.meal-plan-meal': ApiMealPlanMealMealPlanMeal;
       'api::meal-plan.meal-plan': ApiMealPlanMealPlan;
+      'api::nutritional-info.nutritional-info': ApiNutritionalInfoNutritionalInfo;
+      'api::recipe-categorie.recipe-categorie': ApiRecipeCategorieRecipeCategorie;
       'api::recipe-ingredient.recipe-ingredient': ApiRecipeIngredientRecipeIngredient;
+      'api::recipe-subcategorie.recipe-subcategorie': ApiRecipeSubcategorieRecipeSubcategorie;
       'api::recipe.recipe': ApiRecipeRecipe;
       'api::replaceable-ingredient.replaceable-ingredient': ApiReplaceableIngredientReplaceableIngredient;
       'api::user-customized-recipe.user-customized-recipe': ApiUserCustomizedRecipeUserCustomizedRecipe;

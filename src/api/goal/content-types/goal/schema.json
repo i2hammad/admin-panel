@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "goals",
+  "info": {
+    "singularName": "goal",
+    "pluralName": "goals",
+    "displayName": "Goal",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "goal_weight": {
+      "type": "biginteger",
+      "required": true
+    },
+    "reminder_frequency": {
+      "type": "enumeration",
+      "enum": [
+        "Daily",
+        "Weekly",
+        "Monthly"
+      ],
+      "required": true
+    },
+    "personal_goal_note": {
+      "type": "text"
+    }
+  }
+}

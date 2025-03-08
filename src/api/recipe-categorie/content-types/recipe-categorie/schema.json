@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recipe_categories",
+  "info": {
+    "singularName": "recipe-categorie",
+    "pluralName": "recipe-categories",
+    "displayName": "Recipe Categories",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "recipe_category_name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid"
+    },
+    "recipes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::recipe.recipe",
+      "mappedBy": "recipe_category"
+    },
+    "recipe_subcategories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::recipe-subcategorie.recipe-subcategorie",
+      "mappedBy": "recipe_category"
+    }
+  }
+}

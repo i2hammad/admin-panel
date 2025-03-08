@@ -52,14 +52,31 @@
     "instructions": {
       "type": "blocks"
     },
-    "nutritional_info": {
-      "type": "json"
-    },
     "meal_plan_meals": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::meal-plan-meal.meal-plan-meal",
       "mappedBy": "recipes"
+    },
+    "recipe_category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::recipe-categorie.recipe-categorie",
+      "inversedBy": "recipes"
+    },
+    "recipe_subcategory": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::recipe-subcategorie.recipe-subcategorie",
+      "inversedBy": "recipes"
+    },
+    "description": {
+      "type": "text"
+    },
+    "nutrients": {
+      "type": "component",
+      "repeatable": true,
+      "component": "recipie.nutrient-info"
     }
   }
 }

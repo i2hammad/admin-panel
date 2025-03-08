@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "nutritional_infos",
+  "info": {
+    "singularName": "nutritional-info",
+    "pluralName": "nutritional-infos",
+    "displayName": "Nutritional Info"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nutrient_info": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    }
+  }
+}

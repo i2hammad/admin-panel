@@ -9,7 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -88,6 +88,26 @@
       "relation": "oneToMany",
       "target": "api::user-meal-plan.user-meal-plan",
       "mappedBy": "user"
+    },
+    "elimination_calendars": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::elimination-calendar.elimination-calendar",
+      "mappedBy": "user"
+    },
+    "diet_preference": {
+      "type": "enumeration",
+      "enum": [
+        "Carnivore",
+        "Ketovore"
+      ],
+      "required": true
+    },
+    "bmi": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::bmi.bmi",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

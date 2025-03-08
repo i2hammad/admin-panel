@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bmis",
+  "info": {
+    "singularName": "bmi",
+    "pluralName": "bmis",
+    "displayName": "BMI",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "height": {
+      "type": "decimal",
+      "required": true
+    },
+    "Gender": {
+      "type": "enumeration",
+      "enum": [
+        "Male ",
+        "Female",
+        "Other"
+      ],
+      "required": true
+    },
+    "date_of_birth": {
+      "type": "date",
+      "required": true
+    },
+    "currentWeight": {
+      "type": "decimal",
+      "required": true
+    },
+    "idealBmiWeight": {
+      "type": "biginteger"
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "bmi"
+    }
+  }
+}

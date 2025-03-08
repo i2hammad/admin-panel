@@ -4,10 +4,60 @@
   "info": {
     "singularName": "elimination-calendar",
     "pluralName": "elimination-calendars",
-    "displayName": "Elimination Calendar"
+    "displayName": "Elimination Calendar",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
-  "attributes": {}
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "elimination_calendars"
+    },
+    "Item_name": {
+      "type": "string",
+      "required": false
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "log_type": {
+      "type": "enumeration",
+      "enum": [
+        "Eliminated Item",
+        "Added Item",
+        "Daily Note",
+        "Mood Log",
+        "Period Log",
+        "Weight Track"
+      ],
+      "required": true
+    },
+    "mood_rating": {
+      "type": "enumeration",
+      "enum": [
+        "mood one",
+        "mood two",
+        "mood three",
+        "mood four",
+        "mood five"
+      ]
+    },
+    "period_start_date": {
+      "type": "date"
+    },
+    "period_end_date": {
+      "type": "date"
+    },
+    "weight_kg": {
+      "type": "decimal"
+    },
+    "notes": {
+      "type": "blocks"
+    }
+  }
 }
