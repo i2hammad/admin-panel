@@ -4,16 +4,16 @@ export interface RecipieIngredients extends Struct.ComponentSchema {
   collectionName: 'components_recipie_ingredients';
   info: {
     description: '';
-    displayName: 'Ingredients';
+    displayName: 'Recipe Ingredients';
     icon: 'check';
   };
   attributes: {
-    ingredient_category: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::ingredient-category.ingredient-category'
-    >;
-    ingredient_name: Schema.Attribute.String;
+    name: Schema.Attribute.Relation<'oneToOne', 'api::ingredient.ingredient'>;
     quantity: Schema.Attribute.String;
+    replaceable_ingredients: Schema.Attribute.Component<
+      'recipie.replaceable-ingredients',
+      true
+    >;
     unit: Schema.Attribute.Enumeration<
       ['gram,', 'ml,', 'tbsp,', 'cup,', 'to taste']
     >;
@@ -23,12 +23,23 @@ export interface RecipieIngredients extends Struct.ComponentSchema {
 export interface RecipieNutrientInfo extends Struct.ComponentSchema {
   collectionName: 'components_recipie_nutrient_infos';
   info: {
+    description: '';
     displayName: 'Nutrient Info';
     icon: 'chartCircle';
   };
   attributes: {
-    nutrient_info: Schema.Attribute.String;
+    nutrient_name: Schema.Attribute.String;
     value: Schema.Attribute.String;
+  };
+}
+
+export interface RecipieReplaceableIngredients extends Struct.ComponentSchema {
+  collectionName: 'components_recipie_replaceable_ingredients';
+  info: {
+    displayName: 'Replaceable Ingredients';
+  };
+  attributes: {
+    alternative_ingredient_name: Schema.Attribute.String;
   };
 }
 
@@ -99,6 +110,7 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'recipie.ingredients': RecipieIngredients;
       'recipie.nutrient-info': RecipieNutrientInfo;
+      'recipie.replaceable-ingredients': RecipieReplaceableIngredients;
       'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;

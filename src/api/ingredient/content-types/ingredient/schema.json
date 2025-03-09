@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ingredients",
+  "info": {
+    "singularName": "ingredient",
+    "pluralName": "ingredients",
+    "displayName": "Ingredient"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "ingredient_name": {
+      "type": "string"
+    },
+    "ingredient_category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::ingredient-category.ingredient-category",
+      "inversedBy": "ingredients"
+    }
+  }
+}

@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * ingradient router
+ * ingredient router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::ingradient.ingradient');
+module.exports = createCoreRouter('api::ingredient.ingredient');

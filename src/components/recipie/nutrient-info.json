@@ -2,11 +2,12 @@
   "collectionName": "components_recipie_nutrient_infos",
   "info": {
     "displayName": "Nutrient Info",
-    "icon": "chartCircle"
+    "icon": "chartCircle",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "nutrient_info": {
+    "nutrient_name": {
       "type": "string"
     },
     "value": {

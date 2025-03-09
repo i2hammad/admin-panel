@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_recipie_replaceable_ingredients",
+  "info": {
+    "displayName": "Replaceable Ingredients"
+  },
+  "options": {},
+  "attributes": {
+    "alternative_ingredient_name": {
+      "type": "string"
+    }
+  }
+}

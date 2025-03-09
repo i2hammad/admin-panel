@@ -1,15 +1,12 @@
 {
   "collectionName": "components_recipie_ingredients",
   "info": {
-    "displayName": "Ingredients",
+    "displayName": "Recipe Ingredients",
     "icon": "check",
     "description": ""
   },
   "options": {},
   "attributes": {
-    "ingredient_name": {
-      "type": "string"
-    },
     "quantity": {
       "type": "string"
     },
@@ -23,10 +20,15 @@
         "to taste"
       ]
     },
-    "ingredient_category": {
+    "name": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::ingredient-category.ingredient-category"
+      "target": "api::ingredient.ingredient"
+    },
+    "replaceable_ingredients": {
+      "type": "component",
+      "repeatable": true,
+      "component": "recipie.replaceable-ingredients"
     }
   }
 }

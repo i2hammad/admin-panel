@@ -16,11 +16,11 @@
     "description": {
       "type": "text"
     },
-    "ingredient_category": {
+    "ingredients": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::ingradient.ingradient",
-      "mappedBy": "category"
+      "target": "api::ingredient.ingredient",
+      "mappedBy": "ingredient_category"
     }
   }
 }

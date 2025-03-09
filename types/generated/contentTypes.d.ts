@@ -580,48 +580,6 @@ export interface ApiGoalGoal extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiIngradientIngradient extends Struct.CollectionTypeSchema {
-  collectionName: 'ingradients';
-  info: {
-    description: '';
-    displayName: 'Ingradient';
-    pluralName: 'ingradients';
-    singularName: 'ingradient';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    category: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::ingredient-category.ingredient-category'
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    is_replaceable: Schema.Attribute.Boolean;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::ingradient.ingradient'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    recipe_ingredients: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::recipe-ingredient.recipe-ingredient'
-    >;
-    replaceable_ingredients: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::replaceable-ingredient.replaceable-ingredient'
-    >;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiIngredientCategoryIngredientCategory
   extends Struct.CollectionTypeSchema {
   collectionName: 'ingredient_categories';
@@ -638,9 +596,9 @@ export interface ApiIngredientCategoryIngredientCategory
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
-    ingredient_category: Schema.Attribute.Relation<
+    ingredients: Schema.Attribute.Relation<
       'oneToMany',
-      'api::ingradient.ingradient'
+      'api::ingredient.ingredient'
     >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -649,6 +607,38 @@ export interface ApiIngredientCategoryIngredientCategory
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
+  collectionName: 'ingredients';
+  info: {
+    displayName: 'Ingredient';
+    pluralName: 'ingredients';
+    singularName: 'ingredient';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    ingredient_category: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::ingredient-category.ingredient-category'
+    >;
+    ingredient_name: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ingredient.ingredient'
+    > &
+      Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -836,41 +826,6 @@ export interface ApiRecipeCategorieRecipeCategorie
   };
 }
 
-export interface ApiRecipeIngredientRecipeIngredient
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'recipe_ingredients';
-  info: {
-    displayName: 'Recipe Ingredient';
-    pluralName: 'recipe-ingredients';
-    singularName: 'recipe-ingredient';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    ingradient: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::ingradient.ingradient'
-    >;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::recipe-ingredient.recipe-ingredient'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    quantity: Schema.Attribute.Decimal;
-    recipe: Schema.Attribute.Relation<'manyToOne', 'api::recipe.recipe'>;
-    unit: Schema.Attribute.Enumeration<['g,', 'ml,', 'tbsp,', 'cup']>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiRecipeSubcategorieRecipeSubcategorie
   extends Struct.CollectionTypeSchema {
   collectionName: 'recipe_subcategories';
@@ -928,6 +883,7 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
       'api::favorite-recipe.favorite-recipe'
     >;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    ingredients: Schema.Attribute.Component<'recipie.ingredients', true>;
     instructions: Schema.Attribute.Blocks;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -945,10 +901,6 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
       'manyToOne',
       'api::recipe-categorie.recipe-categorie'
     >;
-    recipe_ingredients: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::recipe-ingredient.recipe-ingredient'
-    >;
     recipe_subcategory: Schema.Attribute.Relation<
       'manyToOne',
       'api::recipe-subcategorie.recipe-subcategorie'
@@ -962,42 +914,6 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
       'oneToOne',
       'api::user-customized-recipe.user-customized-recipe'
     >;
-  };
-}
-
-export interface ApiReplaceableIngredientReplaceableIngredient
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'replaceable_ingredients';
-  info: {
-    displayName: 'Replaceable Ingredient';
-    pluralName: 'replaceable-ingredients';
-    singularName: 'replaceable-ingredient';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    ingredient: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::ingradient.ingradient'
-    >;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::replaceable-ingredient.replaceable-ingredient'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    substitutes: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::ingradient.ingradient'
-    >;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
   };
 }
 
@@ -1614,17 +1530,15 @@ declare module '@strapi/strapi' {
       'api::favorite-recipe.favorite-recipe': ApiFavoriteRecipeFavoriteRecipe;
       'api::global.global': ApiGlobalGlobal;
       'api::goal.goal': ApiGoalGoal;
-      'api::ingradient.ingradient': ApiIngradientIngradient;
       'api::ingredient-category.ingredient-category': ApiIngredientCategoryIngredientCategory;
+      'api::ingredient.ingredient': ApiIngredientIngredient;
       'api::meal-plan-day.meal-plan-day': ApiMealPlanDayMealPlanDay;
       'api::meal-plan-meal.meal-plan-meal': ApiMealPlanMealMealPlanMeal;
       'api::meal-plan.meal-plan': ApiMealPlanMealPlan;
       'api::nutritional-info.nutritional-info': ApiNutritionalInfoNutritionalInfo;
       'api::recipe-categorie.recipe-categorie': ApiRecipeCategorieRecipeCategorie;
-      'api::recipe-ingredient.recipe-ingredient': ApiRecipeIngredientRecipeIngredient;
       'api::recipe-subcategorie.recipe-subcategorie': ApiRecipeSubcategorieRecipeSubcategorie;
       'api::recipe.recipe': ApiRecipeRecipe;
-      'api::replaceable-ingredient.replaceable-ingredient': ApiReplaceableIngredientReplaceableIngredient;
       'api::user-customized-recipe.user-customized-recipe': ApiUserCustomizedRecipeUserCustomizedRecipe;
       'api::user-meal-plan.user-meal-plan': ApiUserMealPlanUserMealPlan;
       'plugin::content-releases.release': PluginContentReleasesRelease;

@@ -31,12 +31,6 @@
     "servings": {
       "type": "integer"
     },
-    "recipe_ingredients": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::recipe-ingredient.recipe-ingredient",
-      "mappedBy": "recipe"
-    },
     "user_customized_recipe": {
       "type": "relation",
       "relation": "oneToOne",
@@ -77,6 +71,11 @@
       "type": "component",
       "repeatable": true,
       "component": "recipie.nutrient-info"
+    },
+    "ingredients": {
+      "type": "component",
+      "repeatable": true,
+      "component": "recipie.ingredients"
     }
   }
 }

@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * ingradient service
+ * ingredient service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::ingradient.ingradient');
+module.exports = createCoreService('api::ingredient.ingredient');
