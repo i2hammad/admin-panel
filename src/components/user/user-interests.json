@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_user_user_interests",
+  "info": {
+    "displayName": "User Interests",
+    "icon": "alien"
+  },
+  "options": {},
+  "attributes": {
+    "preferred_ingredient": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::ingredient.ingredient"
+    }
+  }
+}

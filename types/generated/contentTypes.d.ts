@@ -397,7 +397,7 @@ export interface ApiBmiBmi extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    users_permissions_user: Schema.Attribute.Relation<
+    user: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
     >;
@@ -580,43 +580,10 @@ export interface ApiGoalGoal extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiIngredientCategoryIngredientCategory
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'ingredient_categories';
-  info: {
-    displayName: 'Ingredient Category';
-    pluralName: 'ingredient-categories';
-    singularName: 'ingredient-category';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.Text;
-    ingredients: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::ingredient.ingredient'
-    >;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::ingredient-category.ingredient-category'
-    > &
-      Schema.Attribute.Private;
-    name: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
   collectionName: 'ingredients';
   info: {
+    description: '';
     displayName: 'Ingredient';
     pluralName: 'ingredients';
     singularName: 'ingredient';
@@ -628,10 +595,6 @@ export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    ingredient_category: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::ingredient-category.ingredient-category'
-    >;
     ingredient_name: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -640,6 +603,7 @@ export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'ingredient_name'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -649,7 +613,8 @@ export interface ApiIngredientIngredient extends Struct.CollectionTypeSchema {
 export interface ApiMealPlanDayMealPlanDay extends Struct.CollectionTypeSchema {
   collectionName: 'meal_plan_days';
   info: {
-    displayName: 'Meal Plan Days';
+    description: '';
+    displayName: 'Meal Plan Calendar';
     pluralName: 'meal-plan-days';
     singularName: 'meal-plan-day';
   };
@@ -686,7 +651,8 @@ export interface ApiMealPlanMealMealPlanMeal
   extends Struct.CollectionTypeSchema {
   collectionName: 'meal_plan_meals';
   info: {
-    displayName: 'Meal Plan Meals';
+    description: '';
+    displayName: 'Meal';
     pluralName: 'meal-plan-meals';
     singularName: 'meal-plan-meal';
   };
@@ -1501,6 +1467,7 @@ export interface PluginUsersPermissionsUser
       'oneToOne',
       'api::user-customized-recipe.user-customized-recipe'
     >;
+    user_interests: Schema.Attribute.Component<'user.user-interests', true>;
     user_meal_plans: Schema.Attribute.Relation<
       'oneToMany',
       'api::user-meal-plan.user-meal-plan'
@@ -1530,7 +1497,6 @@ declare module '@strapi/strapi' {
       'api::favorite-recipe.favorite-recipe': ApiFavoriteRecipeFavoriteRecipe;
       'api::global.global': ApiGlobalGlobal;
       'api::goal.goal': ApiGoalGoal;
-      'api::ingredient-category.ingredient-category': ApiIngredientCategoryIngredientCategory;
       'api::ingredient.ingredient': ApiIngredientIngredient;
       'api::meal-plan-day.meal-plan-day': ApiMealPlanDayMealPlanDay;
       'api::meal-plan-meal.meal-plan-meal': ApiMealPlanMealMealPlanMeal;

@@ -8,14 +8,16 @@ export interface RecipieIngredients extends Struct.ComponentSchema {
     icon: 'check';
   };
   attributes: {
-    name: Schema.Attribute.Relation<'oneToOne', 'api::ingredient.ingredient'>;
-    quantity: Schema.Attribute.String;
-    replaceable_ingredients: Schema.Attribute.Component<
+    Comments: Schema.Attribute.String;
+    IngredientName: Schema.Attribute.String;
+    IsReplaceable: Schema.Attribute.Boolean;
+    Quantity: Schema.Attribute.String;
+    replaceableIngredients: Schema.Attribute.Component<
       'recipie.replaceable-ingredients',
       true
     >;
-    unit: Schema.Attribute.Enumeration<
-      ['gram,', 'ml,', 'tbsp,', 'cup,', 'to taste']
+    Unit: Schema.Attribute.Enumeration<
+      ['g', 'ml', 'tbsp', 'cup', 'piece', 'To Taste']
     >;
   };
 }
@@ -105,6 +107,20 @@ export interface SharedSlider extends Struct.ComponentSchema {
   };
 }
 
+export interface UserUserInterests extends Struct.ComponentSchema {
+  collectionName: 'components_user_user_interests';
+  info: {
+    displayName: 'User Interests';
+    icon: 'alien';
+  };
+  attributes: {
+    preferred_ingredient: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::ingredient.ingredient'
+    >;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -116,6 +132,7 @@ declare module '@strapi/strapi' {
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
+      'user.user-interests': UserUserInterests;
     }
   }
 }

@@ -103,11 +103,16 @@
       ],
       "required": true
     },
+    "user_interests": {
+      "type": "component",
+      "repeatable": true,
+      "component": "user.user-interests"
+    },
     "bmi": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::bmi.bmi",
-      "mappedBy": "users_permissions_user"
+      "mappedBy": "user"
     }
   }
 }

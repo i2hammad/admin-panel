@@ -7,25 +7,30 @@
   },
   "options": {},
   "attributes": {
-    "quantity": {
+    "IngredientName": {
       "type": "string"
     },
-    "unit": {
+    "Comments": {
+      "type": "string"
+    },
+    "Quantity": {
+      "type": "string"
+    },
+    "Unit": {
       "type": "enumeration",
       "enum": [
-        "gram,",
-        "ml,",
-        "tbsp,",
-        "cup,",
-        "to taste"
+        "g",
+        "ml",
+        "tbsp",
+        "cup",
+        "piece",
+        "To Taste"
       ]
     },
-    "name": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::ingredient.ingredient"
+    "IsReplaceable": {
+      "type": "boolean"
     },
-    "replaceable_ingredients": {
+    "replaceableIngredients": {
       "type": "component",
       "repeatable": true,
       "component": "recipie.replaceable-ingredients"

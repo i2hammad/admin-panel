@@ -4,7 +4,8 @@
   "info": {
     "singularName": "ingredient",
     "pluralName": "ingredients",
-    "displayName": "Ingredient"
+    "displayName": "Ingredient",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -13,11 +14,9 @@
     "ingredient_name": {
       "type": "string"
     },
-    "ingredient_category": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::ingredient-category.ingredient-category",
-      "inversedBy": "ingredients"
+    "slug": {
+      "type": "uid",
+      "targetField": "ingredient_name"
     }
   }
 }
