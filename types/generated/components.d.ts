@@ -1,5 +1,32 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface GeneralPlanGeneralMealPlanDay extends Struct.ComponentSchema {
+  collectionName: 'components_general_plan_general_meal_plan_days';
+  info: {
+    displayName: 'General Meal Plan Day';
+  };
+  attributes: {
+    day_number: Schema.Attribute.Integer & Schema.Attribute.Required;
+    meals: Schema.Attribute.Component<'general-plan.meal', true>;
+  };
+}
+
+export interface GeneralPlanMeal extends Struct.ComponentSchema {
+  collectionName: 'components_general_plan_meals';
+  info: {
+    description: '';
+    displayName: 'Meal';
+    icon: '';
+  };
+  attributes: {
+    meal_type: Schema.Attribute.Enumeration<
+      ['Breakfast', 'Lunch', 'Dinner', 'Snack']
+    >;
+    recipes: Schema.Attribute.Relation<'oneToOne', 'api::recipe.recipe'>;
+    time: Schema.Attribute.Time;
+  };
+}
+
 export interface RecipieIngredients extends Struct.ComponentSchema {
   collectionName: 'components_recipie_ingredients';
   info: {
@@ -17,7 +44,7 @@ export interface RecipieIngredients extends Struct.ComponentSchema {
       true
     >;
     Unit: Schema.Attribute.Enumeration<
-      ['g', 'ml', 'tbsp', 'cup', 'piece', 'To Taste']
+      ['g', 'ml', 'tbsp', 'cup', 'piece', 'lb,', 'To Taste']
     >;
   };
 }
@@ -38,21 +65,15 @@ export interface RecipieNutrientInfo extends Struct.ComponentSchema {
 export interface RecipieReplaceableIngredients extends Struct.ComponentSchema {
   collectionName: 'components_recipie_replaceable_ingredients';
   info: {
+    description: '';
     displayName: 'Replaceable Ingredients';
   };
   attributes: {
-    alternative_ingredient_name: Schema.Attribute.String;
-  };
-}
-
-export interface SharedMedia extends Struct.ComponentSchema {
-  collectionName: 'components_shared_media';
-  info: {
-    displayName: 'Media';
-    icon: 'file-video';
-  };
-  attributes: {
-    file: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+    Comment: Schema.Attribute.String;
+    IngredientName: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::ingredient.ingredient'
+    >;
   };
 }
 
@@ -124,10 +145,11 @@ export interface UserUserInterests extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'general-plan.general-meal-plan-day': GeneralPlanGeneralMealPlanDay;
+      'general-plan.meal': GeneralPlanMeal;
       'recipie.ingredients': RecipieIngredients;
       'recipie.nutrient-info': RecipieNutrientInfo;
       'recipie.replaceable-ingredients': RecipieReplaceableIngredients;
-      'shared.media': SharedMedia;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;

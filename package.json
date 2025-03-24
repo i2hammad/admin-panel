@@ -15,6 +15,7 @@
     "@strapi/design-system": "^2.0.0-rc.18",
     "@strapi/plugin-cloud": "5.11.0",
     "@strapi/plugin-users-permissions": "5.11.0",
+    "@strapi/provider-email-sendmail": "^5.11.0",
     "@strapi/strapi": "5.11.0",
     "fs-extra": "^10.0.0",
     "mime-types": "^2.1.27",

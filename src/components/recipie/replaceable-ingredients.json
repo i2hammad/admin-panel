@@ -1,11 +1,17 @@
 {
   "collectionName": "components_recipie_replaceable_ingredients",
   "info": {
-    "displayName": "Replaceable Ingredients"
+    "displayName": "Replaceable Ingredients",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "alternative_ingredient_name": {
+    "IngredientName": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::ingredient.ingredient"
+    },
+    "Comment": {
       "type": "string"
     }
   }

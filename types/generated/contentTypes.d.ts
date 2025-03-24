@@ -386,7 +386,7 @@ export interface ApiBmiBmi extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     currentWeight: Schema.Attribute.Decimal & Schema.Attribute.Required;
     date_of_birth: Schema.Attribute.Date & Schema.Attribute.Required;
-    Gender: Schema.Attribute.Enumeration<['Male ', 'Female', 'Other']> &
+    Gender: Schema.Attribute.Enumeration<['Male', 'Female', 'Other']> &
       Schema.Attribute.Required;
     height: Schema.Attribute.Decimal & Schema.Attribute.Required;
     idealBmiWeight: Schema.Attribute.BigInteger;
@@ -488,6 +488,7 @@ export interface ApiFavoriteRecipeFavoriteRecipe
   extends Struct.CollectionTypeSchema {
   collectionName: 'favorite_recipes';
   info: {
+    description: '';
     displayName: 'Favorite Recipe';
     pluralName: 'favorite-recipes';
     singularName: 'favorite-recipe';
@@ -506,14 +507,48 @@ export interface ApiFavoriteRecipeFavoriteRecipe
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    recipe: Schema.Attribute.Relation<'oneToOne', 'api::recipe.recipe'>;
+    recipe: Schema.Attribute.Relation<'manyToOne', 'api::recipe.recipe'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     user: Schema.Attribute.Relation<
-      'oneToOne',
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
+  };
+}
+
+export interface ApiGeneralMealPlanGeneralMealPlan
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'general_meal_plans';
+  info: {
+    displayName: 'General Meal Plan';
+    pluralName: 'general-meal-plans';
+    singularName: 'general-meal-plan';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    days: Schema.Attribute.Integer;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::general-meal-plan.general-meal-plan'
+    > &
+      Schema.Attribute.Private;
+    meal_plan_days: Schema.Attribute.Component<
+      'general-plan.general-meal-plan-day',
+      true
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -614,7 +649,7 @@ export interface ApiMealPlanDayMealPlanDay extends Struct.CollectionTypeSchema {
   collectionName: 'meal_plan_days';
   info: {
     description: '';
-    displayName: 'Meal Plan Calendar';
+    displayName: 'Meal Plan Day';
     pluralName: 'meal-plan-days';
     singularName: 'meal-plan-day';
   };
@@ -652,7 +687,7 @@ export interface ApiMealPlanMealMealPlanMeal
   collectionName: 'meal_plan_meals';
   info: {
     description: '';
-    displayName: 'Meal';
+    displayName: 'Meal Plan Meals';
     pluralName: 'meal-plan-meals';
     singularName: 'meal-plan-meal';
   };
@@ -723,36 +758,6 @@ export interface ApiMealPlanMealPlan extends Struct.CollectionTypeSchema {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
-  };
-}
-
-export interface ApiNutritionalInfoNutritionalInfo
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'nutritional_infos';
-  info: {
-    displayName: 'Nutritional Info';
-    pluralName: 'nutritional-infos';
-    singularName: 'nutritional-info';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::nutritional-info.nutritional-info'
-    > &
-      Schema.Attribute.Private;
-    nutrient_info: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    value: Schema.Attribute.String;
   };
 }
 
@@ -844,8 +849,8 @@ export interface ApiRecipeRecipe extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
-    favorite_recipe: Schema.Attribute.Relation<
-      'oneToOne',
+    favorite_recipes: Schema.Attribute.Relation<
+      'oneToMany',
       'api::favorite-recipe.favorite-recipe'
     >;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
@@ -934,6 +939,10 @@ export interface ApiUserMealPlanUserMealPlan
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     end_date: Schema.Attribute.Date;
+    general_meal_plan: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::general-meal-plan.general-meal-plan'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -949,6 +958,7 @@ export interface ApiUserMealPlanUserMealPlan
     >;
     publishedAt: Schema.Attribute.DateTime;
     start_date: Schema.Attribute.Date;
+    total_days: Schema.Attribute.Integer;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1424,7 +1434,8 @@ export interface PluginUsersPermissionsUser
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     diet_preference: Schema.Attribute.Enumeration<['Carnivore', 'Ketovore']> &
-      Schema.Attribute.Required;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Carnivore'>;
     elimination_calendars: Schema.Attribute.Relation<
       'oneToMany',
       'api::elimination-calendar.elimination-calendar'
@@ -1434,8 +1445,8 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
-    favorite_recipe: Schema.Attribute.Relation<
-      'oneToOne',
+    favorite_recipes: Schema.Attribute.Relation<
+      'oneToMany',
       'api::favorite-recipe.favorite-recipe'
     >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1495,13 +1506,13 @@ declare module '@strapi/strapi' {
       'api::elimination-calendar.elimination-calendar': ApiEliminationCalendarEliminationCalendar;
       'api::faq.faq': ApiFaqFaq;
       'api::favorite-recipe.favorite-recipe': ApiFavoriteRecipeFavoriteRecipe;
+      'api::general-meal-plan.general-meal-plan': ApiGeneralMealPlanGeneralMealPlan;
       'api::global.global': ApiGlobalGlobal;
       'api::goal.goal': ApiGoalGoal;
       'api::ingredient.ingredient': ApiIngredientIngredient;
       'api::meal-plan-day.meal-plan-day': ApiMealPlanDayMealPlanDay;
       'api::meal-plan-meal.meal-plan-meal': ApiMealPlanMealMealPlanMeal;
       'api::meal-plan.meal-plan': ApiMealPlanMealPlan;
-      'api::nutritional-info.nutritional-info': ApiNutritionalInfoNutritionalInfo;
       'api::recipe-categorie.recipe-categorie': ApiRecipeCategorieRecipeCategorie;
       'api::recipe-subcategorie.recipe-subcategorie': ApiRecipeSubcategorieRecipeSubcategorie;
       'api::recipe.recipe': ApiRecipeRecipe;

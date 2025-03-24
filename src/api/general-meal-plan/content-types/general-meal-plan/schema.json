@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "general_meal_plans",
+  "info": {
+    "singularName": "general-meal-plan",
+    "pluralName": "general-meal-plans",
+    "displayName": "General Meal Plan"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "days": {
+      "type": "integer"
+    },
+    "meal_plan_days": {
+      "type": "component",
+      "repeatable": true,
+      "component": "general-plan.general-meal-plan-day"
+    }
+  }
+}

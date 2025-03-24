@@ -71,12 +71,6 @@
       "target": "api::user-customized-recipe.user-customized-recipe",
       "mappedBy": "user"
     },
-    "favorite_recipe": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::favorite-recipe.favorite-recipe",
-      "mappedBy": "user"
-    },
     "meal_plans": {
       "type": "relation",
       "relation": "oneToMany",
@@ -101,7 +95,8 @@
         "Carnivore",
         "Ketovore"
       ],
-      "required": true
+      "required": true,
+      "default": "Carnivore"
     },
     "user_interests": {
       "type": "component",
@@ -112,6 +107,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::bmi.bmi",
+      "mappedBy": "user"
+    },
+    "favorite_recipes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::favorite-recipe.favorite-recipe",
       "mappedBy": "user"
     }
   }

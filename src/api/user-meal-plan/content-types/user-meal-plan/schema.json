@@ -36,6 +36,14 @@
       "relation": "manyToOne",
       "target": "api::meal-plan.meal-plan",
       "inversedBy": "user_meal_plans"
+    },
+    "total_days": {
+      "type": "integer"
+    },
+    "general_meal_plan": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::general-meal-plan.general-meal-plan"
     }
   }
 }

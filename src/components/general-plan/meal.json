@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_general_plan_meals",
+  "info": {
+    "displayName": "Meal",
+    "icon": "",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "meal_type": {
+      "type": "enumeration",
+      "enum": [
+        "Breakfast",
+        "Lunch",
+        "Dinner",
+        "Snack"
+      ]
+    },
+    "recipes": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::recipe.recipe"
+    },
+    "time": {
+      "type": "time"
+    }
+  }
+}

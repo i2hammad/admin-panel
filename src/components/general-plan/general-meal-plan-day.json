@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_general_plan_general_meal_plan_days",
+  "info": {
+    "displayName": "General Meal Plan Day"
+  },
+  "options": {},
+  "attributes": {
+    "day_number": {
+      "required": true,
+      "type": "integer"
+    },
+    "meals": {
+      "type": "component",
+      "repeatable": true,
+      "component": "general-plan.meal"
+    }
+  }
+}

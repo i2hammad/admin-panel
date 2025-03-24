@@ -4,23 +4,24 @@
   "info": {
     "singularName": "favorite-recipe",
     "pluralName": "favorite-recipes",
-    "displayName": "Favorite Recipe"
+    "displayName": "Favorite Recipe",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "attributes": {
-    "user": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "favorite_recipe"
-    },
     "recipe": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::recipe.recipe",
-      "inversedBy": "favorite_recipe"
+      "inversedBy": "favorite_recipes"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "favorite_recipes"
     }
   }
 }

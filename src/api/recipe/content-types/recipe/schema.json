@@ -37,12 +37,6 @@
       "target": "api::user-customized-recipe.user-customized-recipe",
       "mappedBy": "recipe"
     },
-    "favorite_recipe": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::favorite-recipe.favorite-recipe",
-      "mappedBy": "recipe"
-    },
     "instructions": {
       "type": "blocks"
     },
@@ -76,6 +70,12 @@
       "type": "component",
       "repeatable": true,
       "component": "recipie.ingredients"
+    },
+    "favorite_recipes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::favorite-recipe.favorite-recipe",
+      "mappedBy": "recipe"
     }
   }
 }
